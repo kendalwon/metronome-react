@@ -11,9 +11,9 @@ class Metronome extends Component {
       playing: false,
       count: 0,
       bpm: 100,
-      beatsPerMeasure: 4
+      beatsPerMeasure: 4,
+      volume: 5
     };
-
     this.click1 = new Audio(click1);
     this.click2 = new Audio(click2);
   }
@@ -31,6 +31,16 @@ class Metronome extends Component {
       this.setState({ bpm });
     }
   };
+
+  handleBeatsPerMeasureChange = event => {
+    const beatsPerMeasure = event.target.value;
+    this.setState({ beatsPerMeasure });
+  }
+
+  handleVolumeChange = event => {
+    const volume = event.target.value;
+    this.setState({ volume });
+  }
 
   startStop = () => {
     if (this.state.playing) {
@@ -50,13 +60,15 @@ class Metronome extends Component {
         this.playClick
       );
     }
-  };
+  }
 
   playClick = () => {
-    const { count, beatsPerMeasure } = this.state;
+    const { count, beatsPerMeasure, volume } = this.state;
+    this.click2.volume = volume/10;
+    this.click1.volume = volume/10;
     if (count % beatsPerMeasure === 0) {
       this.click2.play();
-    } else {
+    } else { 
       this.click1.play();
     }
     this.setState(state => ({
@@ -65,22 +77,44 @@ class Metronome extends Component {
   };
 
   render() {
-    const { playing, bpm } = this.state;
-
+    const { playing, bpm, beatsPerMeasure, volume } = this.state;
     return (
       <div className="metronome">
-        <div className='bpm-slider'>
-          <div>{bpm} BPM</div>
-          <input 
-            type='range' 
-            min='60' 
-            max='240' 
-            value={bpm} 
-            onChange={this.handleBpmChange} />
-        </div>
-        <button onClick={this.startStop}>
-          {playing ? 'Stop' : 'Start'}
-        </button>
+        <h1 className='title'>
+          Metronome
+        </h1>
+        <div className='device'>
+          <div className='slider bpm-slider'>
+            <div>{bpm} BPM</div>
+            <input 
+              type='range' 
+              min='60' 
+              max='240' 
+              value={bpm} 
+              onChange={this.handleBpmChange} />
+          </div>
+          <div className='slider beatsPerMeasure-slider'>
+            <div>{beatsPerMeasure} Beats per Measure</div>
+            <input 
+              type='range'
+              min='1'
+              max='30'
+              value={beatsPerMeasure}
+              onChange={this.handleBeatsPerMeasureChange} />
+          </div>
+          <div className='slider volume-slider'>
+            <div>Volume: {volume}</div>
+            <input 
+              type='range'
+              min='0'
+              max='10'
+              value={volume}
+              onChange={this.handleVolumeChange} />
+          </div>
+          <button onClick={this.startStop}>
+            {playing ? 'Stop' : 'Start'}
+          </button>
+        </div>        
       </div>
     );
   }
