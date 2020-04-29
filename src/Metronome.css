@@ -6,16 +6,28 @@
   font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.bpm-slider input {
-  width: 100%;
-  margin: 10px;
+.title {
+  margin-bottom: 10px;
 }
 
-.metronome button {
+.device {
+  background-color: #eee;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.slider input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.device button {
   background: #c94d46;
   padding: 10px;
   border: 1px solid #832420;
-  border-radius: 2px;
+  border-radius: 5px;
+  margin-top: 20px;
   width: 100px;
   color: #fff;
   font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
